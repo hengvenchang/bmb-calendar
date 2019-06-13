@@ -1,4 +1,4 @@
-@import '../functions';
+@import "../functions";
 
 @mixin week-title($background-color: primary, $color: #fff) {
   margin: 0;
@@ -10,28 +10,21 @@
 }
 
 ion-calendar-week {
-  .toolbar-background-md,
-  .toolbar-background-ios {
-    background: white !important;
+
+  .toolbar-background-md, .toolbar-background-ios {
+    background: transparent;
   }
 
   .week-toolbar {
     padding: 0;
-    box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.1);
   }
 
   .week-toolbar.toolbar-md {
     min-height: 44px;
   }
-  #day-title-0 {
-    color: #f36565;
-  }
 
   .week-title.primary {
     @include week-title(primary);
-    background-color: white !important;
-    color: gray;
-    font-size: 14px;
   }
 
   .week-title.secondary {
@@ -67,8 +60,10 @@ ion-calendar-week {
     text-align: center;
   }
 
-  .week-title li:nth-of-type(7n),
-  .week-title li:nth-of-type(7n + 1) {
+  .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
     width: 15%;
   }
+
 }
+
+

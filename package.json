@@ -1,6 +1,6 @@
 {
   "name": "bmb-calendar",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "description": "A date picker component for ionic2 ",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
