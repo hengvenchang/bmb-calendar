@@ -1,25 +1,28 @@
 import { Component, Input } from '@angular/core';
-import { defaults } from "../config";
+import { defaults } from '../config';
 
 @Component({
   selector: 'ion-calendar-week',
   template: `
     <ion-toolbar class="week-toolbar" no-border-top>
       <ul [class]="'week-title ' + color">
-        <li *ngFor="let w of _displayWeekArray">{{w}}</li>
+        <li *ngFor="let w of _displayWeekArray; let i = index" [id]="'day-title-' + i">{{ w }}</li>
       </ul>
     </ion-toolbar>
   `
 })
-
 export class CalendarWeekComponent {
-
   _weekArray: string[] = defaults.WEEKS_FORMAT;
   _displayWeekArray: string[] = this._weekArray;
   _weekStart: number = 0;
   @Input() color: string = defaults.COLOR;
 
   constructor() {
+    this._weekArray = defaults.WEEKS_FORMAT;
+    var lang = localStorage['lang'];
+    if (lang == 'kh') {
+      this._weekArray = defaults.WEEKS_FORMAT_KH;
+    }
   }
 
   @Input()
@@ -39,6 +42,11 @@ export class CalendarWeekComponent {
   }
 
   adjustSort(): void {
+    this._weekArray = defaults.WEEKS_FORMAT;
+    var lang = localStorage['lang'];
+    if (lang == 'kh') {
+      this._weekArray = defaults.WEEKS_FORMAT_KH;
+    }
     if (this._weekStart === 1) {
       let cacheWeekArray = [...this._weekArray];
       cacheWeekArray.push(cacheWeekArray.shift());
@@ -47,5 +55,4 @@ export class CalendarWeekComponent {
       this._displayWeekArray = [...this._weekArray];
     }
   }
-
 }
