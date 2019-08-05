@@ -4,7 +4,7 @@ import { CalendarDay, CalendarMonth, CalendarModalOptions } from '../calendar.mo
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
 import { pickModes } from '../config';
-
+import { monthTranslation, translation } from '../translation/translation';
 @Component({
   selector: 'ion-calendar-modal',
   template:
@@ -62,7 +62,6 @@ export class CalendarModal implements OnInit {
   startDateValue: any = null;
   returnDateValue: any = null;
   checkStatus: any = true;
-  buttonText: any = "I'm travelling one way";
   buttonTextKey: any = 'ImTravellingOneWay';
   checkStartDate: any = null;
   firstOpen: any = true;
@@ -73,48 +72,6 @@ export class CalendarModal implements OnInit {
   startDateDefault: any = null;
   returnDateDefault: any = null;
   TranslateText: any = null;
-  textEn: any = {
-    ChooseDate: 'Choose Date',
-    StartDate: 'Start Date',
-    ReturnDate: 'Return Date',
-    ImTravellingOneWay: "I'm travelling one way",
-    ImTravellingWithReturnTrip: "I'm travelling with return trips"
-  };
-  textKh: any = {
-    ChooseDate: 'ជ្រើសកាលបរិច្ឆេទ',
-    StartDate: 'ថ្ងៃចេញដំណើរ',
-    ReturnDate: 'ថ្ងៃត្រឡប់មក',
-    ImTravellingOneWay: 'ជ្រើសរើស',
-    ImTravellingWithReturnTrip: 'ជ្រើសរើស'
-  };
-  monthTranslationKh: any = [
-    'មករា',
-    'កុម្ភៈ',
-    'មីនា',
-    'មេសា',
-    'ឧសភា',
-    'មិថុនា',
-    'កក្កដា',
-    'សីហា',
-    'កញ្ញា',
-    'តុលា',
-    'វិច្ឆិកា',
-    'ធ្នូ'
-  ];
-  monthTranslationEn: any = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
   monthTranslation: any = null;
 
   constructor(
@@ -139,14 +96,9 @@ export class CalendarModal implements OnInit {
   }
 
   init(): void {
-    let lang = localStorage['lang'];
-    if (lang == 'en') {
-      this.TranslateText = this.textEn;
-      this.monthTranslation = this.monthTranslationEn;
-    } else if (lang == 'kh') {
-      this.TranslateText = this.textKh;
-      this.monthTranslation = this.monthTranslationKh;
-    }
+    let language = localStorage['lang'] ? localStorage['lang'] : 'en';
+    this.TranslateText = translation[language];
+    this.monthTranslation = monthTranslation[language];
     let segmentActive = this.params.get('options');
     if (this.firstOpen === true) {
       this.segment = segmentActive.title;
@@ -173,11 +125,9 @@ export class CalendarModal implements OnInit {
       this.findInitMonthNumber(this._d.defaultScrollTo) + this.step,
       this._d
     );
-    console.log('this.calendarMonths', this.calendarMonths);
   }
 
   initDefaultDate(): void {
-    console.log('helloworl i am change calendar');
     const { pickMode, defaultDate, defaultDateRange, defaultDates } = this._d;
     switch (pickMode) {
       case pickModes.SINGLE:
@@ -224,7 +174,6 @@ export class CalendarModal implements OnInit {
       _a.pickMode = pickModes.SINGLE;
       data[1] = null;
       this.checkStatus = false;
-      this.buttonText = "I'm travelling one way";
       this.buttonTextKey = 'ImTravellingOneWay';
       this.firstOpenSetDate = false;
     } else if (this.segment === 'startDate' && this.returnDateCheck !== null) {
@@ -236,14 +185,12 @@ export class CalendarModal implements OnInit {
       } else {
         data[1] = this.returnDateCheck;
       }
-      this.buttonText = "I'm travelling with return trip";
       this.buttonTextKey = 'ImTravellingWithReturnTrip';
       data[0] = tt[0];
       this.checkStartDate = data[0];
       this.checkStatus = false;
     }
     if (this.segment === 'returnDate') {
-      this.buttonText = "I'm travelling with return trip";
       this.buttonTextKey = 'ImTravellingWithReturnTrip';
       _a.pickMode = pickModes.RANGE;
       pickMode = _a.pickMode;

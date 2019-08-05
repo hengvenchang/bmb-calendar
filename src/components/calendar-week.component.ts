@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Week } from '../translation/translation';
 import { defaults } from '../config';
-
 @Component({
   selector: 'ion-calendar-week',
   template: `
@@ -12,17 +12,13 @@ import { defaults } from '../config';
   `
 })
 export class CalendarWeekComponent {
-  _weekArray: string[] = defaults.WEEKS_FORMAT;
+  _weekArray: string[] = [];
   _displayWeekArray: string[] = this._weekArray;
   _weekStart: number = 0;
   @Input() color: string = defaults.COLOR;
 
   constructor() {
-    this._weekArray = defaults.WEEKS_FORMAT;
-    var lang = localStorage['lang'];
-    if (lang == 'kh') {
-      this._weekArray = defaults.WEEKS_FORMAT_KH;
-    }
+    this.setWeek();
   }
 
   @Input()
@@ -42,11 +38,7 @@ export class CalendarWeekComponent {
   }
 
   adjustSort(): void {
-    this._weekArray = defaults.WEEKS_FORMAT;
-    var lang = localStorage['lang'];
-    if (lang == 'kh') {
-      this._weekArray = defaults.WEEKS_FORMAT_KH;
-    }
+    this.setWeek();
     if (this._weekStart === 1) {
       let cacheWeekArray = [...this._weekArray];
       cacheWeekArray.push(cacheWeekArray.shift());
@@ -54,5 +46,10 @@ export class CalendarWeekComponent {
     } else if (this._weekStart === 0) {
       this._displayWeekArray = [...this._weekArray];
     }
+  }
+
+  setWeek() {
+    let language = localStorage['lang'] ? localStorage['lang'] : 'en';
+    this._weekArray = Week[language];
   }
 }
