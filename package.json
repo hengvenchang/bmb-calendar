@@ -29,7 +29,7 @@
     "@angular/http": "4.4.6",
     "@angular/platform-browser": "4.4.6",
     "@angular/platform-browser-dynamic": "4.4.6",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-bump": "^3.0.0",
     "ionic-angular": "3.7.1",
     "ionicons": "~3.0.0",
